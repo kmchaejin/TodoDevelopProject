@@ -2,6 +2,7 @@ package com.example.tododevelopproject.service;
 
 import com.example.tododevelopproject.dto.ScheduleRequestDto;
 import com.example.tododevelopproject.dto.ScheduleResponseDto;
+import com.example.tododevelopproject.dto.ScheduleUpdateRequestDto;
 import com.example.tododevelopproject.dto.ScheduleWithoutIdResponseDto;
 import com.example.tododevelopproject.entity.Schedule;
 import com.example.tododevelopproject.repository.ScheduleRepository;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,8 +31,7 @@ public class ScheduleService {
     }
 
     public ScheduleWithoutIdResponseDto findById(Long id) {
-        Optional<Schedule> opFoundSchedule = scheduleRepository.findById(id);
-        Schedule foundSchedule = opFoundSchedule.orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
+        Schedule foundSchedule = scheduleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
 
         return new ScheduleWithoutIdResponseDto(foundSchedule.getTitle(), foundSchedule.getContents(), foundSchedule.getName(), foundSchedule.getCreatedAt(), foundSchedule.getUpdatedAt());
     }
@@ -51,5 +50,20 @@ public class ScheduleService {
     public void deleteById(Long id) {
         scheduleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
         scheduleRepository.deleteById(id);
+    }
+
+    public ScheduleWithoutIdResponseDto update(Long id, ScheduleUpdateRequestDto requestDto) {
+        Schedule foundSchedule = scheduleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
+
+        if(!requestDto.getTitle().isEmpty()){
+            foundSchedule.setTitle(requestDto.getTitle());
+        }
+        if(!requestDto.getContents().isEmpty()){
+            foundSchedule.setContents(requestDto.getContents());
+        }
+
+        Schedule savedSchedule = scheduleRepository.save(foundSchedule);
+
+        return new ScheduleWithoutIdResponseDto(savedSchedule.getName(), savedSchedule.getTitle(), savedSchedule.getContents(), savedSchedule.getCreatedAt(), savedSchedule.getUpdatedAt());
     }
 }

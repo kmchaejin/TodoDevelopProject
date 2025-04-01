@@ -2,7 +2,9 @@ package com.example.tododevelopproject.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
+@Setter
 @Getter
 @Entity
 @Table(name = "schedule")
