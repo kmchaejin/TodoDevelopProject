@@ -2,14 +2,12 @@ package com.example.tododevelopproject.controller;
 
 import com.example.tododevelopproject.dto.UserRequestDto;
 import com.example.tododevelopproject.dto.UserResponseDto;
+import com.example.tododevelopproject.dto.UserWithoutIdResponseDto;
 import com.example.tododevelopproject.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,5 +20,10 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserResponseDto> save(@RequestBody UserRequestDto requestDto){
         return new ResponseEntity<>(userService.save(requestDto), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserWithoutIdResponseDto> findById(@PathVariable Long id){
+        return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
     }
 }
