@@ -31,4 +31,10 @@ public class ScheduleController {
     public ResponseEntity<List<ScheduleResponseDto>> findAll(){
         return new ResponseEntity<>(scheduleService.findAll(), HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id){
+        scheduleService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

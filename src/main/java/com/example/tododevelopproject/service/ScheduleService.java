@@ -47,4 +47,9 @@ public class ScheduleService {
 
         return responseDtoList;
     }
+
+    public void deleteById(Long id) {
+        scheduleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
+        scheduleRepository.deleteById(id);
+    }
 }
