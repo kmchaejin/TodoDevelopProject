@@ -39,4 +39,9 @@ public class UserService {
 
         return responseDtoList;
     }
+
+    public void deleteById(Long id) {
+        userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
+        userRepository.deleteById(id);
+    }
 }
