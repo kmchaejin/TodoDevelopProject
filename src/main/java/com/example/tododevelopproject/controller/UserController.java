@@ -39,4 +39,9 @@ public class UserController {
         userService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserWithoutIdResponseDto> update(@PathVariable Long id, @RequestBody UserRequestDto requestDto){
+        return new ResponseEntity<>(userService.update(id, requestDto), HttpStatus.OK);
+    }
 }

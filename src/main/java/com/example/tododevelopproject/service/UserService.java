@@ -44,4 +44,20 @@ public class UserService {
         userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
         userRepository.deleteById(id);
     }
+
+    public UserWithoutIdResponseDto update(Long id, UserRequestDto requestDto) {
+        User foundUser = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
+
+        if(requestDto.getName() != null && !requestDto.getName().isEmpty()){
+            foundUser.setName(requestDto.getName());
+        }
+
+        if(requestDto.getEmail() != null && !requestDto.getEmail().isEmpty()){
+            foundUser.setEmail(requestDto.getEmail());
+        }
+
+        userRepository.save(foundUser);
+
+        return new UserWithoutIdResponseDto(foundUser);
+    }
 }

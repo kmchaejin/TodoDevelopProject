@@ -1,5 +1,6 @@
 package com.example.tododevelopproject.dto;
 
+import com.example.tododevelopproject.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import java.time.LocalDateTime;
@@ -11,4 +12,11 @@ public class UserWithoutIdResponseDto {
     private String email;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public UserWithoutIdResponseDto(User foundUser) {
+        this.name = foundUser.getName();
+        this.email = foundUser.getEmail();
+        this.createdAt = foundUser.getCreatedAt();
+        this.updatedAt = foundUser.getUpdatedAt();
+    }
 }

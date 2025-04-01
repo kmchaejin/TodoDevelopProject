@@ -55,10 +55,10 @@ public class ScheduleService {
     public ScheduleWithoutIdResponseDto update(Long id, ScheduleUpdateRequestDto requestDto) {
         Schedule foundSchedule = scheduleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
 
-        if(!requestDto.getTitle().isEmpty()){
+        if(requestDto.getTitle() != null && !requestDto.getTitle().isEmpty()){
             foundSchedule.setTitle(requestDto.getTitle());
         }
-        if(!requestDto.getContents().isEmpty()){
+        if(requestDto.getContents() != null && !requestDto.getContents().isEmpty()){
             foundSchedule.setContents(requestDto.getContents());
         }
 
