@@ -5,8 +5,8 @@ CREATE TABLE user
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(10) UNIQUE,
     email VARCHAR(30),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    created_at DATETIME,
+    updated_at DATETIME
 );
 
 CREATE TABLE schedule
@@ -15,7 +15,7 @@ CREATE TABLE schedule
     user_name VARCHAR(10),
     title VARCHAR(20),
     contents VARCHAR(100),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created_at DATETIME,
+    updated_at DATETIME,
     FOREIGN KEY (user_name) REFERENCES user(name)
 );
