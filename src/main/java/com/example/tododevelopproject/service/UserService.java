@@ -8,6 +8,8 @@ import com.example.tododevelopproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
@@ -25,5 +27,16 @@ public class UserService {
     public UserWithoutIdResponseDto findById(Long id) {
         User foundUser = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
         return new UserWithoutIdResponseDto(foundUser.getName(), foundUser.getEmail(), foundUser.getCreatedAt(), foundUser.getUpdatedAt());
+    }
+
+    public List<UserResponseDto> findAll() {
+        List<User> users = userRepository.findAll();
+        List<UserResponseDto> responseDtoList = new ArrayList<>();
+
+        for(User user : users){
+            responseDtoList.add(new UserResponseDto(user));
+        }
+
+        return responseDtoList;
     }
 }
