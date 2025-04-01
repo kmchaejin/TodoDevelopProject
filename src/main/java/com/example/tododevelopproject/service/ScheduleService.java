@@ -8,6 +8,8 @@ import com.example.tododevelopproject.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -33,5 +35,16 @@ public class ScheduleService {
         Schedule foundSchedule = opFoundSchedule.orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
 
         return new ScheduleWithoutIdResponseDto(foundSchedule.getTitle(), foundSchedule.getContents(), foundSchedule.getName(), foundSchedule.getCreatedAt(), foundSchedule.getUpdatedAt());
+    }
+
+    public List<ScheduleResponseDto> findAll() {
+        List<Schedule> schedules = scheduleRepository.findAll();
+        List<ScheduleResponseDto> responseDtoList = new ArrayList<>(); // 구현체 생성 : schedules가 null이어도 null이 아닌 빈 배열 add 가능
+
+        for(Schedule schedule : schedules){
+            responseDtoList.add(new ScheduleResponseDto(schedule));
+        }
+
+        return responseDtoList;
     }
 }

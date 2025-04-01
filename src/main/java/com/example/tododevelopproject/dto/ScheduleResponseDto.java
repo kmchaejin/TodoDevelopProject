@@ -1,5 +1,6 @@
 package com.example.tododevelopproject.dto;
 
+import com.example.tododevelopproject.entity.Schedule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,4 +15,13 @@ public class ScheduleResponseDto {
     private String contents;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public ScheduleResponseDto(Schedule schedule) {
+        this.id = schedule.getId();
+        this.name = schedule.getName();
+        this.title = schedule.getTitle();
+        this.contents = schedule.getContents();
+        this.createdAt = schedule.getCreatedAt();
+        this.updatedAt = schedule.getUpdatedAt();
+    }
 }
