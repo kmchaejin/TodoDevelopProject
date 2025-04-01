@@ -13,19 +13,19 @@ public class Schedule extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // PK 자동 생성
     private Long id;
 
-//    @ManyToOne
-//    @JoinColumn(name="name")
-    private String name;
-
     private String title;
 
     private String contents;
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
     public Schedule() {}
 
-    public Schedule(String title, String contents, String name) {
+    public Schedule(String title, String contents, User user) {
         this.title = title;
         this.contents = contents;
-        this.name = name;
+        this.user = user;
     }
 }

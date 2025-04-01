@@ -5,7 +5,9 @@ import com.example.tododevelopproject.dto.ScheduleResponseDto;
 import com.example.tododevelopproject.dto.ScheduleUpdateRequestDto;
 import com.example.tododevelopproject.dto.ScheduleWithoutIdResponseDto;
 import com.example.tododevelopproject.entity.Schedule;
+import com.example.tododevelopproject.entity.User;
 import com.example.tododevelopproject.repository.ScheduleRepository;
+import com.example.tododevelopproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,23 +19,23 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
-    //private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public ScheduleResponseDto save(ScheduleRequestDto requestDto) {
 
         // 자동 생성된 id값 get
-        //User findUser = userRepository.findUserByUsernameOrElseThrow(requestDto.getName());
+        User foundUser = userRepository.findById(requestDto.getUserId()).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
 
-        Schedule schedule = new Schedule(requestDto.getTitle(), requestDto.getContents(), requestDto.getName());
+        Schedule schedule = new Schedule(requestDto.getTitle(), requestDto.getContents(), foundUser);
         Schedule savedSchedule = scheduleRepository.save(schedule);
 
-        return new ScheduleResponseDto(savedSchedule.getId(), savedSchedule.getTitle(), savedSchedule.getContents(), savedSchedule.getName(), savedSchedule.getCreatedAt(), savedSchedule.getUpdatedAt());
+        return new ScheduleResponseDto(savedSchedule.getId(), savedSchedule.getTitle(), savedSchedule.getContents(), foundUser.getId(), savedSchedule.getCreatedAt(), savedSchedule.getUpdatedAt());
     }
 
     public ScheduleWithoutIdResponseDto findById(Long id) {
         Schedule foundSchedule = scheduleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
 
-        return new ScheduleWithoutIdResponseDto(foundSchedule.getTitle(), foundSchedule.getContents(), foundSchedule.getName(), foundSchedule.getCreatedAt(), foundSchedule.getUpdatedAt());
+        return new ScheduleWithoutIdResponseDto(foundSchedule.getTitle(), foundSchedule.getContents(), foundSchedule.getUser().getId(), foundSchedule.getCreatedAt(), foundSchedule.getUpdatedAt());
     }
 
     public List<ScheduleResponseDto> findAll() {
@@ -55,15 +57,15 @@ public class ScheduleService {
     public ScheduleWithoutIdResponseDto update(Long id, ScheduleUpdateRequestDto requestDto) {
         Schedule foundSchedule = scheduleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
 
-        if(!requestDto.getTitle().isEmpty()){
+        if(requestDto.getTitle() != null && !requestDto.getTitle().isEmpty()){
             foundSchedule.setTitle(requestDto.getTitle());
         }
-        if(!requestDto.getContents().isEmpty()){
+        if(requestDto.getContents() != null && !requestDto.getContents().isEmpty()){
             foundSchedule.setContents(requestDto.getContents());
         }
 
         Schedule savedSchedule = scheduleRepository.save(foundSchedule);
 
-        return new ScheduleWithoutIdResponseDto(savedSchedule.getName(), savedSchedule.getTitle(), savedSchedule.getContents(), savedSchedule.getCreatedAt(), savedSchedule.getUpdatedAt());
+        return new ScheduleWithoutIdResponseDto(savedSchedule.getTitle(), savedSchedule.getContents(), savedSchedule.getId(), savedSchedule.getCreatedAt(), savedSchedule.getUpdatedAt());
     }
 }
