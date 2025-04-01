@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 public class ScheduleWithoutIdResponseDto {
-    private String name;
     private String title;
     private String contents;
+    private Long userId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
