@@ -38,7 +38,7 @@ public class UserController {
     // 로그아웃 API
     // HttpServletResponse은 스프링이 자동으로 주입해주기 때문에 매개변수로 전달 받음
     // response는 return할 필요없이 스프링이 자동으로 클라이언트에게 전달
-    @PostMapping
+    @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletResponse response){
         // 로그아웃 처리(쿠키 삭제)
         // 쿠키가 만료되지 않고 유지될 가능성을 배제하기 위해 userId를 null로 설정 -> 이중체크
@@ -49,7 +49,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/signup")
     public ResponseEntity<UserResponseDto> save(@Valid @RequestBody UserRequestDto requestDto){
         return new ResponseEntity<>(userService.save(requestDto), HttpStatus.CREATED);
     }
