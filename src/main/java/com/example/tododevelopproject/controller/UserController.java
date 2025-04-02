@@ -4,6 +4,7 @@ import com.example.tododevelopproject.dto.UserRequestDto;
 import com.example.tododevelopproject.dto.UserResponseDto;
 import com.example.tododevelopproject.dto.UserWithoutIdResponseDto;
 import com.example.tododevelopproject.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserResponseDto> save(@RequestBody UserRequestDto requestDto){
+    public ResponseEntity<UserResponseDto> save(@Valid @RequestBody UserRequestDto requestDto){
         return new ResponseEntity<>(userService.save(requestDto), HttpStatus.CREATED);
     }
 
