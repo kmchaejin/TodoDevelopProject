@@ -2,8 +2,8 @@ package com.example.tododevelopproject.controller;
 
 import com.example.tododevelopproject.dto.*;
 import com.example.tododevelopproject.service.UserService;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -22,29 +22,41 @@ public class UserController {
     // 의존성 주입이 아니라 new로 인스턴스를 생성할 경우, 해당 객체를 사용하지 않는 상황에서도 인스턴스를 생성하게 됨 -> 리소스 낭비
     // 의존성을 주입하면 리소스 낭비를 막으면서도, 구현 클래스에 의존하지 않도록 해줌
     private final UserService userService;
+    public static final String LOGIN_USER = "loginUser";
 
     // 로그인 API
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto requestDto, HttpServletResponse response){
+    // HttpServletResponse은 스프링이 자동으로 주입해주기 때문에 매개변수로 전달 받음
+    // response는 return할 필요없이 스프링이 자동으로 클라이언트에게 전달
+    public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto requestDto, HttpServletRequest request){
         LoginResponseDto responseDto = userService.login(requestDto);
 
         // 로그인 성공 처리(쿠키 생성)
-        Cookie cookie = new Cookie("userId", String.valueOf(responseDto.getId()));
-        response.addCookie(cookie);
+//        Cookie cookie = new Cookie("userId", String.valueOf(responseDto.getId()));
+//        response.addCookie(cookie);
+
+        HttpSession session = request.getSession(); // 세션 할당
+
+        // 다른 방법은 없나...?
+        UserResponseDto loginUser = new UserResponseDto(responseDto.getId(), userService.findById(responseDto.getId()));
+        session.setAttribute(LOGIN_USER, loginUser);
 
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     // 로그아웃 API
-    // HttpServletResponse은 스프링이 자동으로 주입해주기 때문에 매개변수로 전달 받음
-    // response는 return할 필요없이 스프링이 자동으로 클라이언트에게 전달
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(HttpServletResponse response){
+    public ResponseEntity<Void> logout(HttpServletRequest request){
         // 로그아웃 처리(쿠키 삭제)
         // 쿠키가 만료되지 않고 유지될 가능성을 배제하기 위해 userId를 null로 설정 -> 이중체크
-        Cookie cookie = new Cookie("userId", null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
+//        Cookie cookie = new Cookie("userId", null);
+//        cookie.setMaxAge(0);
+//        response.addCookie(cookie);
+        HttpSession session = request.getSession(false);
+
+        if(session != null){
+            session.invalidate();
+        }
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
