@@ -26,14 +26,8 @@ public class UserController {
 
     // 로그인 API
     @PostMapping("/login")
-    // HttpServletResponse은 스프링이 자동으로 주입해주기 때문에 매개변수로 전달 받음
-    // response는 return할 필요없이 스프링이 자동으로 클라이언트에게 전달
     public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto requestDto, HttpServletRequest request){
         LoginResponseDto responseDto = userService.login(requestDto);
-
-        // 로그인 성공 처리(쿠키 생성)
-//        Cookie cookie = new Cookie("userId", String.valueOf(responseDto.getId()));
-//        response.addCookie(cookie);
 
         HttpSession session = request.getSession(); // 세션 할당
 
@@ -47,11 +41,6 @@ public class UserController {
     // 로그아웃 API
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletRequest request){
-        // 로그아웃 처리(쿠키 삭제)
-        // 쿠키가 만료되지 않고 유지될 가능성을 배제하기 위해 userId를 null로 설정 -> 이중체크
-//        Cookie cookie = new Cookie("userId", null);
-//        cookie.setMaxAge(0);
-//        response.addCookie(cookie);
         HttpSession session = request.getSession(false);
 
         if(session != null){

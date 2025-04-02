@@ -1,5 +1,6 @@
 package com.example.tododevelopproject.filter;
 
+import com.example.tododevelopproject.exception.LoginFailedException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,7 +29,7 @@ public class LoginFilter implements Filter {
             HttpSession session = httpRequest.getSession(false);
 
             if(session == null || session.getAttribute(LOGIN_USER) == null){
-                throw new RuntimeException("로그인 해주세요.");
+                throw new LoginFailedException("아이디 입력은 필수입니다.");
             }
         }
 
