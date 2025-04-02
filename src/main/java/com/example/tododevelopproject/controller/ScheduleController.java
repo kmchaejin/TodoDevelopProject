@@ -17,6 +17,7 @@ import java.util.List;
 @RequestMapping("/api/schedules")
 public class ScheduleController {
     private final ScheduleService scheduleService;
+    //private final UserService userService;
 
     @PostMapping
     public ResponseEntity<ScheduleResponseDto> save(@RequestBody ScheduleRequestDto requestDto){

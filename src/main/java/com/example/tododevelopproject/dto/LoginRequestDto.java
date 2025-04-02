@@ -5,9 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
-public class UserRequestDto {
-    private String name;
-    @NotBlank
+public class LoginRequestDto {
+    @NotBlank //공백 불가
     private String email;
     @NotNull
     private String password;
