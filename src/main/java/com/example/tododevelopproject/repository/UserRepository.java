@@ -10,6 +10,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findUserByEmail(String email);
     
     default User findByEmailOrElseThrow(String email){
+        // Todo: 로그인 실패 예외처리 enum으로 리팩토링
         return findUserByEmail(email).orElseThrow(() -> new NoSuchElementException("존재하지 않는 사용자입니다."));
     }
 }

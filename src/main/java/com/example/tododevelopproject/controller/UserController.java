@@ -31,7 +31,7 @@ public class UserController {
 
         HttpSession session = request.getSession(); // 세션 할당
 
-        // 다른 방법은 없나...?
+        // Todo: 리팩토링 필요해보임
         UserResponseDto loginUser = new UserResponseDto(responseDto.getId(), userService.findById(responseDto.getId()));
         session.setAttribute(LOGIN_USER, loginUser);
 
@@ -72,7 +72,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UserWithoutIdResponseDto> update(@PathVariable Long id, @Valid @RequestBody UserRequestDto requestDto){
+    public ResponseEntity<UserWithoutIdResponseDto> update(@NotNull @PathVariable Long id, @Valid @RequestBody UserRequestDto requestDto){
         return new ResponseEntity<>(userService.update(id, requestDto), HttpStatus.OK);
     }
 }

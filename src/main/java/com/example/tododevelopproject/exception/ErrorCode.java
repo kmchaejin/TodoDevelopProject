@@ -1,5 +1,8 @@
 package com.example.tododevelopproject.exception;
 
+import lombok.Getter;
+
+@Getter
 public enum ErrorCode {
     NOT_FOUND_USER(401, "Unauthorized", "C001", "잘못된 입력값입니다");
 
