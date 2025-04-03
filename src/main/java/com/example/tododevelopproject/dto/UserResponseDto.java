@@ -22,4 +22,12 @@ public class UserResponseDto {
         this.createdAt = user.getCreatedAt();
         this.updatedAt = user.getUpdatedAt();
     }
+
+    public UserResponseDto(Long id, UserWithoutIdResponseDto dto) {
+        this.id = id;
+        this.name = dto.getName();
+        this.email = dto.getEmail();
+        this.createdAt = dto.getCreatedAt();
+        this.updatedAt = dto.getUpdatedAt();
+    }
 }

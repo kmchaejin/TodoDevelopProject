@@ -1,8 +1,6 @@
 package com.example.tododevelopproject.service;
 
-import com.example.tododevelopproject.dto.UserRequestDto;
-import com.example.tododevelopproject.dto.UserResponseDto;
-import com.example.tododevelopproject.dto.UserWithoutIdResponseDto;
+import com.example.tododevelopproject.dto.*;
 import com.example.tododevelopproject.entity.User;
 import com.example.tododevelopproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -59,5 +57,17 @@ public class UserService {
         userRepository.save(foundUser);
 
         return new UserWithoutIdResponseDto(foundUser);
+    }
+
+    public LoginResponseDto login(LoginRequestDto requestDto) {
+        User foundUser = userRepository.findByEmailOrElseThrow(requestDto.getEmail());
+
+        if(!requestDto.getPassword().equals(foundUser.getPassword())){
+            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
+        }
+
+        String message = foundUser.getName() + "님, 환영합니다";
+
+        return new LoginResponseDto(foundUser.getId(), message);
     }
 }

@@ -6,8 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 
 @Getter
-public class UserRequestDto {
-    private String name;
+public class LoginRequestDto {
     @NotBlank(message = "이메일은 필수 입력값입니다.")
     @Pattern(regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", message = "유효한 이메일 주소를 입력하세요.")
     private String email;
