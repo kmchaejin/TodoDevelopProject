@@ -24,7 +24,7 @@ public class ScheduleService {
     public ScheduleResponseDto save(ScheduleRequestDto requestDto) {
 
         // 자동 생성된 id값 get
-        User foundUser = userRepository.findById(requestDto.getUserId()).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
+        User foundUser = userRepository.findById(requestDto.getUserId()).orElseThrow(NoSuchElementException::new);
 
         Schedule schedule = new Schedule(requestDto.getTitle(), requestDto.getContents(), foundUser);
         Schedule savedSchedule = scheduleRepository.save(schedule);
@@ -33,14 +33,14 @@ public class ScheduleService {
     }
 
     public ScheduleWithoutIdResponseDto findById(Long id) {
-        Schedule foundSchedule = scheduleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
+        Schedule foundSchedule = scheduleRepository.findById(id).orElseThrow(NoSuchElementException::new);
 
         return new ScheduleWithoutIdResponseDto(foundSchedule.getTitle(), foundSchedule.getContents(), foundSchedule.getUser().getId(), foundSchedule.getCreatedAt(), foundSchedule.getUpdatedAt());
     }
 
     public List<ScheduleResponseDto> findAll() {
         List<Schedule> schedules = scheduleRepository.findAll();
-        List<ScheduleResponseDto> responseDtoList = new ArrayList<>(); // 구현체 생성 : schedules가 null이어도 null이 아닌 빈 배열 add 가능
+        List<ScheduleResponseDto> responseDtoList = new ArrayList<>();
 
         for(Schedule schedule : schedules){
             responseDtoList.add(new ScheduleResponseDto(schedule));
@@ -50,12 +50,12 @@ public class ScheduleService {
     }
 
     public void deleteById(Long id) {
-        scheduleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
+        scheduleRepository.findById(id).orElseThrow(NoSuchElementException::new);
         scheduleRepository.deleteById(id);
     }
 
     public ScheduleWithoutIdResponseDto update(Long id, ScheduleUpdateRequestDto requestDto) {
-        Schedule foundSchedule = scheduleRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
+        Schedule foundSchedule = scheduleRepository.findById(id).orElseThrow(NoSuchElementException::new);
 
         if(requestDto.getTitle() != null && !requestDto.getTitle().isEmpty()){
             foundSchedule.setTitle(requestDto.getTitle());

@@ -23,7 +23,7 @@ public class UserService {
     }
 
     public UserWithoutIdResponseDto findById(Long id) {
-        User foundUser = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
+        User foundUser = userRepository.findById(id).orElseThrow(NoSuchElementException::new);
         return new UserWithoutIdResponseDto(foundUser.getName(), foundUser.getEmail(), foundUser.getCreatedAt(), foundUser.getUpdatedAt());
     }
 
@@ -39,12 +39,12 @@ public class UserService {
     }
 
     public void deleteById(Long id) {
-        userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
+        userRepository.findById(id).orElseThrow(NoSuchElementException::new);
         userRepository.deleteById(id);
     }
 
     public UserWithoutIdResponseDto update(Long id, UserRequestDto requestDto) {
-        User foundUser = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("존재하지 않는 id입니다."));
+        User foundUser = userRepository.findById(id).orElseThrow(NoSuchElementException::new);
 
         if(requestDto.getName() != null && !requestDto.getName().isEmpty()){
             foundUser.setName(requestDto.getName());
@@ -60,7 +60,7 @@ public class UserService {
     }
 
     public LoginResponseDto login(LoginRequestDto requestDto) {
-        User foundUser = userRepository.findByEmail(requestDto.getEmail()).orElseThrow(NoSuchElementException::new);
+        User foundUser = userRepository.findByEmail(requestDto.getEmail()).orElseThrow(() -> new NoSuchElementException("가입되지 않은 이메일입니다."));
 
         if(!requestDto.getPassword().equals(foundUser.getPassword())){
             throw new IllegalArgumentException();

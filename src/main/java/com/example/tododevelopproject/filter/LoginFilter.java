@@ -36,7 +36,7 @@ public class LoginFilter implements Filter {
 
             if (session == null || session.getAttribute(LOGIN_USER) == null) {
                 // ObjectMapper를 통해 Dto를 HttpServletResponse에 담아서 JSON 형식으로 전달
-                ErrorResponseDto responseDto = new ErrorResponseDto(Timestamp.valueOf(LocalDateTime.now()), UNAUTHORIZED, requestURI);
+                ErrorResponseDto responseDto = new ErrorResponseDto(Timestamp.valueOf(LocalDateTime.now()), UNAUTHORIZED.getStatus(), UNAUTHORIZED.getError(), UNAUTHORIZED.getCode(), UNAUTHORIZED.getMessage(), requestURI);
                 ObjectMapper objectMapper = new ObjectMapper();
                 String json = objectMapper.writeValueAsString(responseDto);
 

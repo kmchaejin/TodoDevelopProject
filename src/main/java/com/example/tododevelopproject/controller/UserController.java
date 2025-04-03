@@ -5,16 +5,13 @@ import com.example.tododevelopproject.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Validated
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/users")
@@ -56,7 +53,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserWithoutIdResponseDto> findById(@NotNull @PathVariable Long id){
+    public ResponseEntity<UserWithoutIdResponseDto> findById(@PathVariable Long id){
         return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
     }
 
@@ -66,13 +63,13 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@NotNull @PathVariable Long id){
+    public ResponseEntity<Void> deleteById(@PathVariable Long id){
         userService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UserWithoutIdResponseDto> update(@NotNull @PathVariable Long id, @Valid @RequestBody UserRequestDto requestDto){
+    public ResponseEntity<UserWithoutIdResponseDto> update(@PathVariable Long id, @Valid @RequestBody UserRequestDto requestDto){
         return new ResponseEntity<>(userService.update(id, requestDto), HttpStatus.OK);
     }
 }
