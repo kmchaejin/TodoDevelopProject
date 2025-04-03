@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import static com.example.tododevelopproject.controller.UserController.LOGIN_USER;
-import static com.example.tododevelopproject.exception.ErrorCode.NOT_FOUND_USER;
+import static com.example.tododevelopproject.exception.ErrorCode.UNAUTHORIZED;
 
 @Slf4j
 public class LoginFilter implements Filter {
@@ -36,7 +36,7 @@ public class LoginFilter implements Filter {
 
             if (session == null || session.getAttribute(LOGIN_USER) == null) {
                 // ObjectMapper를 통해 Dto를 HttpServletResponse에 담아서 JSON 형식으로 전달
-                ErrorResponseDto responseDto = new ErrorResponseDto(Timestamp.valueOf(LocalDateTime.now()), NOT_FOUND_USER, requestURI);
+                ErrorResponseDto responseDto = new ErrorResponseDto(Timestamp.valueOf(LocalDateTime.now()), UNAUTHORIZED, requestURI);
                 ObjectMapper objectMapper = new ObjectMapper();
                 String json = objectMapper.writeValueAsString(responseDto);
 

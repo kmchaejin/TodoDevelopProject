@@ -4,7 +4,9 @@ import lombok.Getter;
 
 @Getter
 public enum ErrorCode {
-    NOT_FOUND_USER(401, "Unauthorized", "C001", "잘못된 입력값입니다");
+    UNAUTHORIZED(401, "Unauthorized", "C001", "로그인이 필요합니다."),
+    INCORRECT_EMAIL(404, "Not Found", "C002", "존재하지 않는 이메일입니다."),
+    INCORRECT_PASSWORD(400, "Bad Request", "C003", "비밀번호가 일치하지 않습니다.");
 
     private final int status;
     private final String error;

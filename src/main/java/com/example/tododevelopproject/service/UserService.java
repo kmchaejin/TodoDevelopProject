@@ -60,10 +60,10 @@ public class UserService {
     }
 
     public LoginResponseDto login(LoginRequestDto requestDto) {
-        User foundUser = userRepository.findByEmailOrElseThrow(requestDto.getEmail());
+        User foundUser = userRepository.findByEmail(requestDto.getEmail()).orElseThrow(NoSuchElementException::new);
 
         if(!requestDto.getPassword().equals(foundUser.getPassword())){
-            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
+            throw new IllegalArgumentException();
         }
 
         String message = foundUser.getName() + "님, 환영합니다";
