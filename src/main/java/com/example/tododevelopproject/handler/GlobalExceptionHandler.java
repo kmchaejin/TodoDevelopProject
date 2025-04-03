@@ -1,11 +1,20 @@
 package com.example.tododevelopproject.handler;
 
+import com.example.tododevelopproject.dto.ErrorResponseDto;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
+
+import static com.example.tododevelopproject.exception.ErrorCode.INCORRECT_EMAIL;
+import static com.example.tododevelopproject.exception.ErrorCode.INCORRECT_PASSWORD;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -22,13 +31,17 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public void handleNoSuchElementException(NoSuchElementException e){
+    public ResponseEntity<ErrorResponseDto> handleNoSuchElementException(NoSuchElementException e, HttpServletRequest request){
         // findUserByEmail,findById - 존재하지 않는 값으로 데이터 조회 예외처리 (핸들러에서 메시지 설정하기)
+        ErrorResponseDto responseDto = new ErrorResponseDto(Timestamp.valueOf(LocalDateTime.now()), INCORRECT_EMAIL, request.getRequestURI());
 
+        return new ResponseEntity<>(responseDto, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public void handleIllegalArgumentException(IllegalArgumentException e){
-        // 로그인 시 비밀번호 불일치 예외처리
+    public ResponseEntity<ErrorResponseDto> handleIllegalArgumentException(IllegalArgumentException e, HttpServletRequest request){
+        ErrorResponseDto responseDto = new ErrorResponseDto(Timestamp.valueOf(LocalDateTime.now()), INCORRECT_PASSWORD, request.getRequestURI());
+
+        return new ResponseEntity<>(responseDto,HttpStatus.BAD_REQUEST);
     }
 }
