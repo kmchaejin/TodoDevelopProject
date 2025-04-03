@@ -10,6 +10,7 @@ import com.example.tododevelopproject.repository.ScheduleRepository;
 import com.example.tododevelopproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,7 @@ public class ScheduleService {
         scheduleRepository.deleteById(id);
     }
 
+    @Transactional
     public ScheduleWithoutIdResponseDto update(Long id, ScheduleUpdateRequestDto requestDto) {
         Schedule foundSchedule = scheduleRepository.findById(id).orElseThrow(NoSuchElementException::new);
 
@@ -64,8 +66,6 @@ public class ScheduleService {
             foundSchedule.setContents(requestDto.getContents());
         }
 
-        Schedule savedSchedule = scheduleRepository.save(foundSchedule);
-
-        return new ScheduleWithoutIdResponseDto(savedSchedule.getTitle(), savedSchedule.getContents(), savedSchedule.getId(), savedSchedule.getCreatedAt(), savedSchedule.getUpdatedAt());
+        return new ScheduleWithoutIdResponseDto(foundSchedule.getTitle(), foundSchedule.getContents(), foundSchedule.getId(), foundSchedule.getCreatedAt(), foundSchedule.getUpdatedAt());
     }
 }
