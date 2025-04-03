@@ -1,11 +1,16 @@
 package com.example.tododevelopproject.service;
 
 import com.example.tododevelopproject.config.PasswordEncoder;
-import com.example.tododevelopproject.dto.*;
+import com.example.tododevelopproject.dto.common.LoginRequestDto;
+import com.example.tododevelopproject.dto.common.LoginResponseDto;
+import com.example.tododevelopproject.dto.user.UserRequestDto;
+import com.example.tododevelopproject.dto.user.UserResponseDto;
+import com.example.tododevelopproject.dto.user.UserWithoutIdResponseDto;
 import com.example.tododevelopproject.entity.User;
 import com.example.tododevelopproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +52,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    @Transactional
     public UserWithoutIdResponseDto update(Long id, UserRequestDto requestDto) {
         User foundUser = userRepository.findById(id).orElseThrow(NoSuchElementException::new);
 
@@ -57,8 +63,6 @@ public class UserService {
         if(requestDto.getEmail() != null && !requestDto.getEmail().isEmpty()){
             foundUser.setEmail(requestDto.getEmail());
         }
-
-        userRepository.save(foundUser);
 
         return new UserWithoutIdResponseDto(foundUser);
     }

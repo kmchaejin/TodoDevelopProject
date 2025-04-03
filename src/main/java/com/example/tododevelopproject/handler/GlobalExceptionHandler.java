@@ -1,6 +1,6 @@
 package com.example.tododevelopproject.handler;
 
-import com.example.tododevelopproject.dto.ErrorResponseDto;
+import com.example.tododevelopproject.dto.common.ErrorResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

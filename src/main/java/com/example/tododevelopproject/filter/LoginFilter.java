@@ -1,6 +1,6 @@
 package com.example.tododevelopproject.filter;
 
-import com.example.tododevelopproject.dto.ErrorResponseDto;
+import com.example.tododevelopproject.dto.common.ErrorResponseDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import static com.example.tododevelopproject.controller.UserController.LOGIN_USER;
+import static com.example.tododevelopproject.config.Const.LOGIN_USER;
 import static com.example.tododevelopproject.exception.ErrorCode.UNAUTHORIZED;
 
 @Slf4j
