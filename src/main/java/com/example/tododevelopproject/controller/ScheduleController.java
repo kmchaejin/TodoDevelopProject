@@ -6,16 +6,13 @@ import com.example.tododevelopproject.dto.ScheduleUpdateRequestDto;
 import com.example.tododevelopproject.dto.ScheduleWithoutIdResponseDto;
 import com.example.tododevelopproject.service.ScheduleService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/schedules")
@@ -28,7 +25,7 @@ public class ScheduleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ScheduleWithoutIdResponseDto> findById(@NotNull @PathVariable Long id){
+    public ResponseEntity<ScheduleWithoutIdResponseDto> findById(@PathVariable Long id){
         return new ResponseEntity<>(scheduleService.findById(id), HttpStatus.OK);
     }
 
@@ -38,13 +35,13 @@ public class ScheduleController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@NotNull @PathVariable Long id){
+    public ResponseEntity<Void> deleteById(@PathVariable Long id){
         scheduleService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ScheduleWithoutIdResponseDto> update(@NotNull @PathVariable Long id, @RequestBody ScheduleUpdateRequestDto requestDto){
+    public ResponseEntity<ScheduleWithoutIdResponseDto> update(@PathVariable Long id, @RequestBody ScheduleUpdateRequestDto requestDto){
         return new ResponseEntity<>(scheduleService.update(id, requestDto), HttpStatus.OK);
     }
 }

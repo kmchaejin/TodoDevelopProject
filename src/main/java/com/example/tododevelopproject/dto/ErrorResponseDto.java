@@ -1,6 +1,5 @@
 package com.example.tododevelopproject.dto;
 
-import com.example.tododevelopproject.exception.ErrorCode;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
@@ -15,14 +14,13 @@ public class ErrorResponseDto {
     private String code;
     private String message;
     private String path;
-    //private List<FieldError> fieldErrors;
 
-    public ErrorResponseDto(Timestamp timestamp, ErrorCode errorCode, String requestURI) {
+    public ErrorResponseDto(Timestamp timestamp, int status, String error, String code, String message, String requestURI) {
         this.timestamp = timestamp;
-        this.status = errorCode.getStatus();
-        this.error = errorCode.getError();
-        this.code = errorCode.getCode();
-        this.message = errorCode.getMessage();
+        this.status = status;
+        this.error = error;
+        this.code = code;
+        this.message = message;
         this.path = requestURI;
     }
 }
