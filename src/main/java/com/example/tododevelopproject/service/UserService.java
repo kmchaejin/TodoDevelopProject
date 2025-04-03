@@ -1,7 +1,11 @@
 package com.example.tododevelopproject.service;
 
 import com.example.tododevelopproject.config.PasswordEncoder;
-import com.example.tododevelopproject.dto.*;
+import com.example.tododevelopproject.dto.common.LoginRequestDto;
+import com.example.tododevelopproject.dto.common.LoginResponseDto;
+import com.example.tododevelopproject.dto.user.UserRequestDto;
+import com.example.tododevelopproject.dto.user.UserResponseDto;
+import com.example.tododevelopproject.dto.user.UserWithoutIdResponseDto;
 import com.example.tododevelopproject.entity.User;
 import com.example.tododevelopproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

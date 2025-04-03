@@ -1,6 +1,10 @@
 package com.example.tododevelopproject.controller;
 
-import com.example.tododevelopproject.dto.*;
+import com.example.tododevelopproject.dto.common.LoginRequestDto;
+import com.example.tododevelopproject.dto.common.LoginResponseDto;
+import com.example.tododevelopproject.dto.user.UserRequestDto;
+import com.example.tododevelopproject.dto.user.UserResponseDto;
+import com.example.tododevelopproject.dto.user.UserWithoutIdResponseDto;
 import com.example.tododevelopproject.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -12,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.example.tododevelopproject.config.Const.LOGIN_USER;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/users")
@@ -19,7 +25,6 @@ public class UserController {
     // 의존성 주입이 아니라 new로 인스턴스를 생성할 경우, 해당 객체를 사용하지 않는 상황에서도 인스턴스를 생성하게 됨 -> 리소스 낭비
     // 의존성을 주입하면 리소스 낭비를 막으면서도, 구현 클래스에 의존하지 않도록 해줌
     private final UserService userService;
-    public static final String LOGIN_USER = "loginUser";
 
     // 로그인 API
     @PostMapping("/login")

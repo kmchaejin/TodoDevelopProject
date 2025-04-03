@@ -1,9 +1,9 @@
 package com.example.tododevelopproject.service;
 
-import com.example.tododevelopproject.dto.ScheduleRequestDto;
-import com.example.tododevelopproject.dto.ScheduleResponseDto;
-import com.example.tododevelopproject.dto.ScheduleUpdateRequestDto;
-import com.example.tododevelopproject.dto.ScheduleWithoutIdResponseDto;
+import com.example.tododevelopproject.dto.schedule.ScheduleRequestDto;
+import com.example.tododevelopproject.dto.schedule.ScheduleResponseDto;
+import com.example.tododevelopproject.dto.schedule.ScheduleUpdateRequestDto;
+import com.example.tododevelopproject.dto.schedule.ScheduleWithoutIdResponseDto;
 import com.example.tododevelopproject.entity.Schedule;
 import com.example.tododevelopproject.entity.User;
 import com.example.tododevelopproject.repository.ScheduleRepository;

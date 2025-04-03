@@ -1,9 +1,9 @@
 package com.example.tododevelopproject.controller;
 
-import com.example.tododevelopproject.dto.ScheduleRequestDto;
-import com.example.tododevelopproject.dto.ScheduleResponseDto;
-import com.example.tododevelopproject.dto.ScheduleUpdateRequestDto;
-import com.example.tododevelopproject.dto.ScheduleWithoutIdResponseDto;
+import com.example.tododevelopproject.dto.schedule.ScheduleRequestDto;
+import com.example.tododevelopproject.dto.schedule.ScheduleResponseDto;
+import com.example.tododevelopproject.dto.schedule.ScheduleUpdateRequestDto;
+import com.example.tododevelopproject.dto.schedule.ScheduleWithoutIdResponseDto;
 import com.example.tododevelopproject.service.ScheduleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.example.tododevelopproject.dto;
+package com.example.tododevelopproject.dto.common;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
