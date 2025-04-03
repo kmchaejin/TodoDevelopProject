@@ -1,5 +1,6 @@
 package com.example.tododevelopproject.service;
 
+import com.example.tododevelopproject.config.PasswordEncoder;
 import com.example.tododevelopproject.dto.*;
 import com.example.tododevelopproject.entity.User;
 import com.example.tododevelopproject.repository.UserRepository;
@@ -14,9 +15,12 @@ import java.util.NoSuchElementException;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserResponseDto save(UserRequestDto requestDto) {
-        User user = new User(requestDto.getName(), requestDto.getEmail(), requestDto.getPassword());
+        String encodedPassword = passwordEncoder.encode(requestDto.getPassword());
+
+        User user = new User(requestDto.getName(), requestDto.getEmail(), encodedPassword);
         User savedUser = userRepository.save(user);
 
         return new UserResponseDto(savedUser.getId(), savedUser.getName(), savedUser.getEmail(), savedUser.getCreatedAt(), savedUser.getUpdatedAt());
@@ -62,7 +66,7 @@ public class UserService {
     public LoginResponseDto login(LoginRequestDto requestDto) {
         User foundUser = userRepository.findByEmail(requestDto.getEmail()).orElseThrow(() -> new NoSuchElementException("가입되지 않은 이메일입니다."));
 
-        if(!requestDto.getPassword().equals(foundUser.getPassword())){
+        if(!passwordEncoder.matches(requestDto.getPassword(), foundUser.getPassword())){
             throw new IllegalArgumentException();
         }
 
