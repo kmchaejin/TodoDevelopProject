@@ -5,6 +5,9 @@ import lombok.Getter;
 
 import java.sql.Timestamp;
 
+/*
+예외 발생 시 공통적인 형식으로 에러 메시지를 전달하기 위한 DTO
+ */
 @Getter
 public class ErrorResponseDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")

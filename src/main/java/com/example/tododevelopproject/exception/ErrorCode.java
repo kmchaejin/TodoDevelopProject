@@ -1,7 +1,9 @@
 package com.example.tododevelopproject.exception;
 
 import lombok.Getter;
-
+/*
+예외처리에 사용되는 에러 코드 지정
+ */
 @Getter
 public enum ErrorCode {
     UNAUTHORIZED(401, "Unauthorized", "C001", "로그인이 필요합니다."),
