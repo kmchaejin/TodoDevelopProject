@@ -14,6 +14,9 @@ import java.util.NoSuchElementException;
 
 import static com.example.tododevelopproject.exception.ErrorCode.*;
 
+/*
+ErrorResponseDto에 해당하는 예외의 정보를 담아 클라이언트에게 응답
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

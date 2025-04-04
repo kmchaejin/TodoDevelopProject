@@ -22,16 +22,17 @@ import static com.example.tododevelopproject.config.Const.LOGIN_USER;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    // 의존성 주입이 아니라 new로 인스턴스를 생성할 경우, 해당 객체를 사용하지 않는 상황에서도 인스턴스를 생성하게 됨 -> 리소스 낭비
-    // 의존성을 주입하면 리소스 낭비를 막으면서도, 구현 클래스에 의존하지 않도록 해줌
     private final UserService userService;
 
-    // 로그인 API
+    /*
+    로그인 API
+    세션을 할당하여 전체 API 요청 시 필터에서 예외가 발생하지 않도록 하는 기능
+     */
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto requestDto, HttpServletRequest request){
         LoginResponseDto responseDto = userService.login(requestDto);
 
-        HttpSession session = request.getSession(); // 세션 할당
+        HttpSession session = request.getSession();
 
         // Todo: 리팩토링 필요해보임
         UserResponseDto loginUser = new UserResponseDto(responseDto.getId(), userService.findById(responseDto.getId()));
@@ -40,7 +41,10 @@ public class UserController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-    // 로그아웃 API
+    /*
+    로그아웃 API
+    세션을 삭제하여 이후 전체 API 접근 시 필터에서 예외 발생
+     */
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletRequest request){
         HttpSession session = request.getSession(false);
